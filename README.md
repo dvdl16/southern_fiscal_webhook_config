@@ -2,6 +2,8 @@
 Config Files for Webhook
 
 
+### Update/Deploy
+
 ```shell
 # Get latest changes
 git pull
@@ -19,4 +21,9 @@ envsubst < scripts/ha-trigger-gate-pedestrian.template.sh > scripts/ha-trigger-g
 # Make executable
 chmod +x scripts/ha-trigger-gate.sh
 chmod +x scripts/ha-trigger-gate-pedestrian.sh
+```
+
+And optionally:
+```shell
+docker restart webhook
 ```
