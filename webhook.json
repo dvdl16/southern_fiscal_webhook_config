@@ -1,7 +1,0 @@
-[
-  {
-    "id": "webhook-ha-trigger-gate",
-    "execute-command": "/var/scripts/ha-trigger-gate.sh",
-    "command-working-directory": "/var/webhook"
-  }
-]

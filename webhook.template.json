@@ -1,0 +1,17 @@
+[
+  {
+    "id": "webhook-ha-trigger-gate",
+    "execute-command": "/etc/webhook/scripts/ha-trigger-gate.sh",
+    "command-working-directory": "/etc/webhook",
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "${WEBHOOK_SECRET_TRIGGER_GATE}",
+        "parameter": {
+          "source": "header",
+          "name": "X-Secret"
+        }
+      }
+    }
+  }
+]
