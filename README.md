@@ -14,5 +14,9 @@ set +a  # or set +o allexport
 # Substitue env vars
 envsubst < webhook.template.json > webhook.json
 envsubst < scripts/ha-trigger-gate.template.sh > scripts/ha-trigger-gate.sh
+envsubst < scripts/ha-trigger-gate-pedestrian.template.sh > scripts/ha-trigger-gate-pedestrian.sh
+
+# Make executable
 chmod +x scripts/ha-trigger-gate.sh
+chmod +x scripts/ha-trigger-gate-pedestrian.sh
 ```
