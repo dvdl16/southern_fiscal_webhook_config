@@ -6,7 +6,7 @@
     "trigger-rule": {
       "match": {
         "type": "value",
-        "value": "${WEBHOOK_SECRET_TRIGGER_GATE}",
+        "value": "{{WEBHOOK_SECRET_TRIGGER_GATE}}",
         "parameter": {
           "source": "header",
           "name": "X-Secret"
@@ -21,12 +21,33 @@
     "trigger-rule": {
       "match": {
         "type": "value",
-        "value": "${WEBHOOK_SECRET_TRIGGER_GATE}",
+        "value": "{{WEBHOOK_SECRET_TRIGGER_GATE}}",
         "parameter": {
           "source": "header",
           "name": "X-Secret"
         }
       }
     }
+  },
+  {
+    "id": "webhook-diane-process-transcript",
+    "execute-command": "/etc/webhook/scripts/transcript-to-docx-email.sh",
+    "command-working-directory": "/etc/webhook",
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "{{WEBHOOK_USER_ID_DIANE}}",
+        "parameter": {
+          "source": "payload",
+          "name": "user.id"
+        }
+      }
+    },
+    "pass-arguments-to-command": [
+      {
+        "source": "payload",
+        "name": "payload.body-plain"
+      }
+    ]
   }
 ]
