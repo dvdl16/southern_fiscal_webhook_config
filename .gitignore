@@ -1,5 +1,9 @@
 .env
 webhook.json
-scripts/ha-trigger-gate.sh
 .aider*
 *.docx
+
+# Ignore all .sh files
+*.sh
+# But keep all .template.sh files
+!*.template.sh
