@@ -12,6 +12,9 @@ curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -
 ### Update/Deploy
 
 ```shell
+ssh root@blackkite
+cd /var/southern_fiscal_webhook_config
+
 # Get latest changes
 git pull
 
