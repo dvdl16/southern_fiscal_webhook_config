@@ -19,14 +19,20 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
 import os
+import ssl
 
 
-class FastmailSMTP(smtplib.SMTP_SSL):
+class FastmailSMTP():
     """A wrapper for handling SMTP connections to Fastmail."""
 
     def __init__(self, username, password):
-        super().__init__('smtp.fastmail.com', port=465)
-        self.login(username, password)
+        ctx = ssl.create_default_context()
+        srv = smtplib.SMTP('smtp.fastmail.com', 587, timeout=10)
+        srv.ehlo()
+        srv.starttls(context=ctx)
+        srv.ehlo()
+        srv.login(username, password)
+        self._srv = srv
 
     def send_message(self, *,
                      from_addr,
@@ -53,7 +59,16 @@ class FastmailSMTP(smtplib.SMTP_SSL):
                     % attachment.replace('"', ''))
                 msg_root.attach(prt)
 
-        self.sendmail(from_addr, to_addrs, msg_root.as_string())
+        self._srv.sendmail(from_addr, to_addrs, msg_root.as_string())
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        try:
+            self._srv.quit()
+        except Exception:
+            pass
 
 
 def markdown_to_word(markdown_content: str, subject_line: str=None):
@@ -69,7 +84,7 @@ def markdown_to_word(markdown_content: str, subject_line: str=None):
 
     # Converting HTML to text and add it to the Word Document
     soup = BeautifulSoup(html_content, 'html.parser')
-    
+
     # Adding content to the Word Document
     for element in soup:
         if element.name == 'h1':
@@ -93,7 +108,7 @@ def markdown_to_word(markdown_content: str, subject_line: str=None):
         elif element.name == 'ol':
             for li in element.find_all('li'):
                 doc.add_paragraph(li.text, style='List Number')
-    
+
     doc.save(word_file)
 
     print(word_file)
