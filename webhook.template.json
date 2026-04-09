@@ -30,6 +30,26 @@
     }
   },
   {
+    "id": "webhook-maxun-trigger-notify",
+    "execute-command": "/etc/webhook/scripts/maxun-trigger-notify.sh",
+    "command-working-directory": "/etc/webhook",
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "{{MAXUN_WEBHOOK_ID}}",
+        "parameter": {
+          "source": "payload",
+          "name": "webhook_id"
+        }
+      }
+    },
+    "pass-arguments-to-command": [
+      {
+        "source": "entire-payload"
+      }
+    ]
+  },
+  {
     "id": "webhook-diane-process-transcript",
     "execute-command": "/etc/webhook/scripts/transcript-to-docx-email.sh",
     "command-working-directory": "/etc/webhook",

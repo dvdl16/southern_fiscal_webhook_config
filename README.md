@@ -28,11 +28,13 @@ mo webhook.template.json > webhook.json
 mo scripts/ha-trigger-gate.template.sh > scripts/ha-trigger-gate.sh
 mo scripts/ha-trigger-gate-pedestrian.template.sh > scripts/ha-trigger-gate-pedestrian.sh
 mo scripts/transcript-to-docx-email.template.sh > scripts/transcript-to-docx-email.sh
+mo scripts/maxun-trigger-notify.template.sh > scripts/maxun-trigger-notify.sh
 
 # Make executable
 chmod +x scripts/ha-trigger-gate.sh
 chmod +x scripts/ha-trigger-gate-pedestrian.sh
 chmod +x scripts/transcript-to-docx-email.sh
+chmod +x scripts/maxun-trigger-notify.sh
 ```
 
 And optionally:
