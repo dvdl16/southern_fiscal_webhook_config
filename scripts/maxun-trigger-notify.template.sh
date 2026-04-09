@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-RUN_ID=$(echo "$1" | jq -r '.data.run_id')
+RUN_ID=$(echo "$1" | grep -o '"run_id":"[^"]*"' | sed 's/"run_id":"//;s/"//')
 
 if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
     echo "Error: could not extract run_id from payload" >&2
