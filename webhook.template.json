@@ -36,10 +36,10 @@
     "trigger-rule": {
       "match": {
         "type": "value",
-        "value": "{{MAXUN_WEBHOOK_ID}}",
+        "value": "{{MAXUN_WEBHOOK_SECRET}}",
         "parameter": {
-          "source": "payload",
-          "name": "webhook_id"
+          "source": "url",
+          "name": "secret"
         }
       }
     },
