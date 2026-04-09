@@ -12,13 +12,15 @@ if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
     exit 1
 fi
 
-curl -s -o /dev/null -w "%{http_code}" -X POST \
+HTTP_STATUS=$(curl -s -w "%{http_code}" -o /tmp/gh_response.txt -X POST \
      -H "Authorization: Bearer {{AFRICAN_SKIMMER_GITHUB_TOKEN}}" \
      -H "Accept: application/vnd.github+json" \
      -d "{\"ref\":\"main\",\"inputs\":{\"run_id\":\"$RUN_ID\"}}" \
-     "https://api.github.com/repos/{{AFRICAN_SKIMMER_GITHUB_REPO}}/actions/workflows/notify.yml/dispatches" | grep -q "^204$"
+     "https://api.github.com/repos/{{AFRICAN_SKIMMER_GITHUB_REPO}}/actions/workflows/notify.yml/dispatches")
 
-if [ $? -eq 0 ]; then
+echo "GitHub API response: $HTTP_STATUS - $(cat /tmp/gh_response.txt)"
+
+if [ "$HTTP_STATUS" = "204" ]; then
     echo "Successfully triggered notify workflow for run_id: $RUN_ID"
 else
     echo "Error triggering notify workflow for run_id: $RUN_ID" >&2
